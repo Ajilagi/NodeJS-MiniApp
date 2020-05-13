@@ -1,0 +1,40 @@
+<%- include('layouts/header'); %>
+      <!-- Statistics Section-->
+      <section class="statistics section-padding">
+        <div class="container-fluid">
+          <div class="row d-flex">
+            <div class="col-lg-4">
+              <!-- Penerimaan-->
+              <div class="card income text-center">
+                <div class="icon"><i class="fas fa-cash-register"></i></div>
+                <div class="number">Rp <%= new Intl.NumberFormat(['ban', 'id']).format(data.pemasukan) %></div><strong class="text-primary">Pemasukan</strong>
+                <p>Semua transaksi dengan jenis pemasukan.</p>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <!-- Pengeluaran-->
+              <div class="card income text-center">
+                <div class="icon"><i class="fas fa-money-bill-wave-alt"></i></div>
+                <div class="number">Rp <%= new Intl.NumberFormat(['ban', 'id']).format(data.pengeluaran) %></div><strong class="text-primary">Pengeluaran</strong>
+                <p>Semua transaksi dengan jenis pengeluaran.</p>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <!-- Saldo-->
+              <div class="card income text-center">
+                <div class="icon"><i class="fas fa-wallet"></i></div>
+                <div class="number">Rp <%= new Intl.NumberFormat(['ban', 'id']).format(data.pemasukan - data.pengeluaran) %></div><strong class="text-primary">Saldo</strong>
+                <p>Semua jumlah transaksi pemasukan dikurangi pengeluaran.</p>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer class="main-footer">
+        <%- include('layouts/footer'); %>
+      </footer>
+    </div>
+    <%- include('layouts/js'); %>
+  </body>
+</html>

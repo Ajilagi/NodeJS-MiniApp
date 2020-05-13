@@ -1,0 +1,355 @@
+<%- include('layouts/header'); %>
+      <section>
+        <div class="container-fluid">
+          <!-- Page Header-->
+          <header> 
+            <h1 class="h3 display">Transaksi</h1>
+          </header>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-header row">
+                  <h4 class="col-lg-10">List Transaksi</h4>
+                  <button type="button" data-toggle="modal" data-target="#addModal" class="btn btn-primary pull-right">Tambah Transaksi </button>
+                </div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>Tgl Mulai</label>
+                      <input type="text" id="filter-start" name="start" class="form-control datepicker" date-format='YYYY-MM-DD' value="<%= start %>">
+                    </div>
+                    <div class="form-group">
+                      <label>Tgl Akhir</label>
+                      <input type="text" id="filter-end" name="end" class="form-control datepicker" date-format='YYYY-MM-DD' value="<%= end %>">
+                    </div>
+                    <div class="pull-right" style="float: right;">
+                      <input type="button" id="submit-filter" class="btn btn-primary" name="" value="Filter">
+                    </div>
+                  <div class="table-responsive">
+                    <table class="table" id="main-table">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Jenis Transaksi</th>
+                          <th>Kategori</th>
+                          <th>Deskripsi</th>
+                          <th>Nominal</th>
+                          <th class="text-center">Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Add Modal-->
+      <div id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+        <div role="document" class="modal-dialog">
+          <form method="post" action="">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 id="exampleModalLabel" class="modal-title">Tambah Transaksi</h5>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+              </div>
+              <div class="modal-body">
+                <p>Masukkan data berikut.</p>
+                <form>
+                  <div class="form-group">
+                    <label class="form-control-label">Jenis Transaksi</label>
+                    <select name="jenis_transaksi" class="form-control">
+                      <option value="1">Pemasukan</option>
+                      <option value="2">Pengeluaran</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">Jenis Kategori</label>
+                    <select name="kategori_id" class="form-control">
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Nominal</label>
+                    <input type="number" name="nominal" placeholder="Nominal Jumlah Transaksi" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>Deskripsi</label>
+                    <input type="text" name="deskripsi" placeholder="Deskripsi Transaksi" class="form-control">
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Edit Modal-->
+      <div id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+        <div role="document" class="modal-dialog">
+          <form method="post" action="transaksi/update">
+            <input type="hidden" name="id">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 id="exampleModalLabel" class="modal-title">Edit Transaksi</h5>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+              </div>
+              <div class="modal-body">
+                <p>Edit data berikut.</p>
+                <form>
+                  <div class="form-group">
+                    <label class="form-control-label">Jenis Transaksi</label>
+                    <select name="jenis_transaksi" class="form-control">
+                      <option value="1">Pemasukan</option>
+                      <option value="2">Pengeluaran</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">Jenis Kategori</label>
+                    <select name="kategori_id" class="form-control">
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Nominal</label>
+                    <input type="number" name="nominal" placeholder="Nominal Jumlah Transaksi" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>Deskripsi</label>
+                    <input type="text" name="deskripsi" placeholder="Deskripsi Transaksi" class="form-control">
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Delete Modal-->
+      <div id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+        <div role="document" class="modal-dialog">
+          <form method="post" action="/transaksi/delete">
+            <input type="hidden" name="id">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 id="exampleModalLabel" class="modal-title">Delete Transaksi</h5>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+              </div>
+              <div class="modal-body">
+                <p>Delete data berikut.</p>
+                <form>
+                  <div class="form-group">
+                    <label class="form-control-label">Jenis Transaksi</label>
+                    <select name="jenis_transaksi" class="form-control" disabled>
+                      <option value="1">Pemasukan</option>
+                      <option value="2">Pengeluaran</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">Jenis Kategori</label>
+                    <select name="kategori_id" class="form-control" disabled>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Nominal</label>
+                    <input type="text" name="nominal" placeholder="Nominal Jumlah Transaksi" class="form-control" disabled>
+                  </div>
+                  <div class="form-group">
+                    <label>Deskripsi</label>
+                    <input type="text" name="deskripsi" placeholder="Deskripsi Transaksi" class="form-control" disabled>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary">Batal</button>
+                <button type="submit" class="btn btn-danger">Ya</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <footer class="main-footer">
+        <%- include('layouts/footer'); %>
+      </footer>
+    </div>
+    <%- include('layouts/js'); %>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        const table = $('#main-table').DataTable({
+          processing: true,
+          serverSide: true,
+          searching : false,
+          ordering  : false,
+          paging    : true,
+          ajax: {
+              url: '/transaksi/get-data-index-table',
+              type: 'GET',
+              data :{
+                start_date : () => $('#filter-start').val(),
+                end_date   : () => $('#filter-end').val()
+              },
+              dataSrc: "data"
+          },
+          columns: [
+              { data: 'no' },
+              { data: 'jenis_transaksi' },
+              { data: 'kategori' },
+              { data: 'deskripsi', orderable: false},
+              { data: 'nominal_txt' },
+              { data: 'aksi', orderable: false}
+          ]
+        });
+
+        $( ".datepicker" ).datepicker({
+          autoclose : true,
+          format: "dd/mm/yyyy"
+        });
+
+        appendKategoriAdd();
+        appendKategoriEdit();
+        appendKategoriDelete();
+
+        $('#submit-filter').click(function() {
+          table.draw();
+        });
+
+        $(document).on('click', '.edit', async function() {
+          const id = $(this).data('id');
+
+          const data = await getSingleData(id);
+
+          $('#editModal input[name="id"]').val(data.id);
+          
+          const jenis_id = findJenisIdByKategoriId(data.kategori_id);
+          $('#editModal select[name="jenis_transaksi"]').val(jenis_id);
+          appendKategoriEdit();
+          $('#editModal select[name="kategori_id"]').val(data.kategori_id);
+          $('#editModal input[name="nominal"]').val(data.nominal);
+          $('#editModal input[name="deskripsi"]').val(data.deskripsi);
+
+          $('#editModal').modal('show');
+        });
+
+        $(document).on('click', '.delete', async function() {
+          const id = $(this).data('id');
+
+          const data = await getSingleData(id);
+
+          $('#deleteModal input[name="id"]').val(data.id);
+          
+          const jenis_id = findJenisIdByKategoriId(data.kategori_id);
+          $('#deleteModal select[name="jenis_transaksi"]').val(jenis_id);
+          appendKategoriDelete();
+          $('#deleteModal select[name="kategori_id"]').val(data.kategori_id);
+          const nominal_txt = `Rp ${new Intl.NumberFormat(['ban', 'id']).format(data.nominal)}, -`;
+          console.log(nominal_txt);
+          $('#deleteModal input[name="nominal"]').val(nominal_txt);
+          $('#deleteModal input[name="deskripsi"]').val(data.deskripsi);
+
+          $('#deleteModal').modal('show');
+        });
+
+        $('#addModal select[name="jenis_transaksi"]').change(function() {
+          appendKategoriAdd();
+        });
+
+        $('#editModal select[name="jenis_transaksi"]').change(function() {
+          appendKategoriEdit();
+        });
+
+        $('#deleteModal select[name="jenis_transaksi"]').change(function() {
+          appendKategoriDelete();
+        });
+      });
+
+      function appendKategoriAdd() {
+        jenis_transaksi = $('#addModal select[name="jenis_transaksi"]')[0].value;
+
+        let kategori = null;
+        if (jenis_transaksi ==1) {
+          kategori = <%- JSON.stringify(kategori_pemasukan) %>
+        } else if(jenis_transaksi ==2){
+          kategori = <%- JSON.stringify(kategori_pengeluaran) %>
+        }
+
+        let str='';
+        kategori.forEach( function(element, index) {
+          str += `<option value=${element.id}>${element.nama}</option>`;
+        });
+        $('#addModal select[name="kategori_id"]').html(str);
+      }
+
+      function appendKategoriEdit() {
+        jenis_transaksi = $('#editModal select[name="jenis_transaksi"]')[0].value;
+
+        let kategori = null;
+        if (jenis_transaksi == 1) {
+          kategori = <%- JSON.stringify(kategori_pemasukan) %>
+        } else if(jenis_transaksi == 2){
+          kategori = <%- JSON.stringify(kategori_pengeluaran) %>
+        }
+
+        let str='';
+        kategori.forEach( function(element, index) {
+          str += `<option value=${element.id}>${element.nama}</option>`;
+        });
+        $('#editModal select[name="kategori_id"]').html(str);
+      }
+
+      function appendKategoriDelete() {
+        jenis_transaksi = $('#deleteModal select[name="jenis_transaksi"]')[0].value;
+
+        let kategori = null;
+        if (jenis_transaksi == 1) {
+          kategori = <%- JSON.stringify(kategori_pemasukan) %>
+        } else if(jenis_transaksi == 2){
+          kategori = <%- JSON.stringify(kategori_pengeluaran) %>
+        }
+
+        let str='';
+        kategori.forEach( function(element, index) {
+          str += `<option value=${element.id}>${element.nama}</option>`;
+        });
+        $('#deleteModal select[name="kategori_id"]').html(str);
+      }
+
+      function getSingleData(id) {
+        return $.ajax({
+            url     : "/transaksi/get-single",
+            data    : {
+              id : id
+            },
+            error   : function(jqXHR, textStatus, errorThrown) {
+              console.error(jqXHR, textStatus, errorThrown);
+            }
+          });
+      }
+
+      function findJenisIdByKategoriId(kategori_id) {
+        kategori_pemasukan = <%- JSON.stringify(kategori_pemasukan) %>
+
+        kategori = kategori_pemasukan.find((value) => {
+          return value.id == kategori_id;
+        })
+        if (kategori == undefined) {
+          kategori_pengeluaran = <%- JSON.stringify(kategori_pengeluaran) %>
+
+          kategori = kategori_pengeluaran.find((value) => {
+            return value.id == kategori_id;
+          })
+        }
+
+        return kategori.jenis_id; 
+      }
+    </script>
+  </body>
+</html>

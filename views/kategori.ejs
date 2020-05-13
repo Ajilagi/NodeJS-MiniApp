@@ -1,0 +1,181 @@
+<%- include('layouts/header'); %>
+      <section>
+        <div class="container-fluid">
+          <!-- Page Header-->
+          <header> 
+            <h1 class="h3 display">Kategori</h1>
+          </header>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4>Kategori</h4>
+                </div>
+                <div class="card-body">
+                  <button type="button" data-toggle="modal" data-target="#addModal" class="btn btn-primary pull-right mb-2">Tambah Kategori </button>
+                  <form id='filter-submit' method="get" action="">
+                    <select name="jenis_id" class="form-control" id="filter-jenis" required>
+                      <option value="">Semua</option>
+                      <option value="1">Pemasukan</option>
+                      <option value="2">Pengeluaran</option>
+                    </select>
+                  </form>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nama</th>
+                          <th>Jenis</th>
+                          <th class="text-center">Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% data.forEach(function(value, key){ %>
+                          <tr>
+                            <th scope="row"><%= key+1 %></th>
+                            <td><%= value.nama %></td>
+                            <td><%= value.jenis %></td>
+                            <td class="text-center">
+                              <button type="button" data-toggle="modal" data-target="#editModal" class="btn btn-warning edit" data-json="<%= JSON.stringify(value) %>">Edit</button>
+                              <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger delete" data-json="<%= JSON.stringify(value) %>">Delete</button>
+                            </td></td>
+                          </tr>
+                        <% }); %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Add Modal-->
+      <div id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+        <div role="document" class="modal-dialog">
+          <form method="post" action="">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 id="exampleModalLabel" class="modal-title">Tambah Kategori</h5>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+              </div>
+              <div class="modal-body">
+                <p>Masukkan data berikut.</p>
+                <form>
+                  <div class="form-group">
+                    <select name="jenis_id" class="form-control" required>
+                      <option value="1">Pemasukan</option>
+                      <option value="2">Pengeluaran</option>
+                    </select>
+                    <label>Nama</label>
+                    <input type="text" name="nama" placeholder="Nama Kategori Pemasukan" class="form-control" required>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Edit Modal-->
+      <div id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+        <div role="document" class="modal-dialog">
+          <form method="post" action="/kategori/update">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 id="exampleModalLabel" class="modal-title">Edit Kategori</h5>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+              </div>
+              <div class="modal-body">
+                <p>Edit data berikut.</p>
+                <form>
+                  <div class="form-group">
+                    <input type="hidden" name="id">
+                    <select name="jenis_id" class="form-control" required>
+                      <option value="1">Pemasukan</option>
+                      <option value="2">Pengeluaran</option>
+                    </select>
+                    <label>Nama</label>
+                    <input type="text" name="nama" placeholder="Nama Kategori Pemasukan" class="form-control">
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Delete Modal-->
+      <div id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+        <div role="document" class="modal-dialog">
+          <form method="post" action="/kategori/delete">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 id="exampleModalLabel" class="modal-title">Edit Kategori</h5>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+              </div>
+              <div class="modal-body">
+                <p>Delete data berikut.</p>
+                <form>
+                  <div class="form-group">
+                    <input type="hidden" name="id">
+                    <select name="jenis_id" class="form-control" disabled>
+                      <option value="1">Pemasukan</option>
+                      <option value="2">Pengeluaran</option>
+                    </select>
+                    <label>Nama</label>
+                    <input type="text" name="nama" class="form-control" disabled>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary">Batal</button>
+                <button type="submit" class="btn btn-danger">Ya</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <footer class="main-footer">
+        <%- include('layouts/footer'); %>
+      </footer>
+    </div>
+    <%- include('layouts/js'); %>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        const jenis_id = '<%= query.jenis_id %>';
+        $('#filter-jenis').val(jenis_id);
+
+        $('.edit').click(function() {
+          const data = $(this).data('json');
+
+          $('#editModal input[name="id"]').val(data.id);
+          $('#editModal select[name="jenis_id"]').val(data.jenis_id);
+          $('#editModal input[name="nama"]').val(data.nama);
+        });
+
+        $('.delete').click(function() {
+          const data = $(this).data('json');
+
+          $('#deleteModal input[name="id"]').val(data.id);
+          $('#deleteModal select[name="jenis_id"]').val(data.jenis_id);
+          $('#deleteModal input[name="nama"]').val(data.nama);
+        });
+
+        $('#filter-jenis').change(function() {
+          $("#filter-submit").submit();
+        });
+      });
+    </script>
+  </body>
+</html>
