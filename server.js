@@ -8,9 +8,9 @@ const config 	= require('./app/config');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
+
 //route
 const routes 	= require('./routes')(express);
-
 app.use('/', routes);
 
 app.listen(config.port);

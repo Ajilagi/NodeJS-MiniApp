@@ -1,23 +1,15 @@
-const HomeController 	 			= require('./app/Controllers/HomeController');
-const TransaksiController 			= require('./app/Controllers/TransaksiController');
-const KategoriController 			= require('./app/Controllers/KategoriController');
+const HomeController = require('./app/Controllers/HomeController');
 
 module.exports = function(express){
 	const router 	= express.Router();
 
+
 	router.get('/', HomeController.index);
+	const kategoriRoutes 	= require('./routes/kategori')(express);
+	router.use('/kategori', kategoriRoutes);
 
-	router.get('/kategori', KategoriController.index);
-	router.post('/kategori', KategoriController.create);
-	router.post('/kategori/update', KategoriController.update);
-	router.post('/kategori/delete', KategoriController.delete);
-
-	router.get('/transaksi', TransaksiController.index);
-	router.get('/transaksi/get-data-index-table', TransaksiController.getDataIndexTable);
-	router.get('/transaksi/get-single', TransaksiController.getSingle);
-	router.post('/transaksi', TransaksiController.create);
-	router.post('/transaksi/update', TransaksiController.update);
-	router.post('/transaksi/delete', TransaksiController.delete);
+	const transaksiRoutes 	= require('./routes/transaksi')(express);
+	router.use('/transaksi', transaksiRoutes);
 
 	return router;
 };
