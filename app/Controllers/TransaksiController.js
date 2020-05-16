@@ -58,17 +58,17 @@ exports.getSingle = async function(req, res) {
 exports.create = function(req, res) {
     transaksiRepository.insert(req.body);
 
-	res.redirect('back');
+	res.redirect('/transaksi');
 };
 
 exports.update = function(req, res) {
     transaksiRepository.update(req.body);
 
-	res.redirect('back');
+	res.redirect('/transaksi');
 };
 
 exports.delete = function(req, res) {
  	transaksiRepository.delete(req.body);
 
-	res.redirect('back');
+	res.redirect('/transaksi');
 };

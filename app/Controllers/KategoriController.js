@@ -12,17 +12,17 @@ exports.index = async function(req, res) {
 exports.create = function(req, res) {
     kategoriRepository.insert(req.body);
 
-	res.redirect('back');
+	res.redirect('/kategori');
 };
 
 exports.update = function(req, res) {
  	kategoriRepository.update(req.body);
 
-	res.redirect('back');
+	res.redirect('/kategori');
 };
 
 exports.delete = function(req, res) {
  	kategoriRepository.delete(req.body);
 
-	res.redirect('back');
+	res.redirect('/kategori');
 };
